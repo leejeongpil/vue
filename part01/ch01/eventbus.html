@@ -10,28 +10,34 @@
     <div id="app">
       <button>컴포넌트 데이터 왓다 갓다</button>
       {{message}}
-      <child-component v-on:show-log="printText"></child-component>
+      <child-component
+        v-on:show-log="printText"
+        v-bind:propsdata="message2"
+      ></child-component>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
       Vue.component("child-component", {
-        template: '<button v-on:click="showLog">show</button>',
+        template: '<button v-on:click="showLog">show, {{propsdata}}</button> ',
         methods: {
           showLog() {
             this.$emit("show-log");
           },
         },
+        props: ["propsdata"],
       });
 
       var app = new Vue({
         el: "#app",
         data: {
           message: "data!!! vue!!!",
+          message2: "zzzzz data!!! vue!!!",
         },
         methods: {
           printText() {
             console.log("received an event");
             this.message = "zzzzz";
+            this.message2 = "wtf";
           },
         },
       });
